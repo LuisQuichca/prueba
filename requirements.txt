@@ -13,4 +13,5 @@ db-dtypes==1.1.1
 langchain
 langchain-community
 langchain_experimental
+openai
 gunicorn
