@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/apple-icon.png')}}" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+    <title>
+        Invento IA Solutions
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/nucleo-icons.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/nucleo-svg.css')}}" />
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/nucleo-svg.css')}}" />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" id="pagestyle" href="{{ url_for('static', filename='assets/css/soft-ui-dashboard.css')}}" />
+
+    
+    <style>
+        #chat-container {
+            max-width: 1020px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+            margin-top: 50px;
+        }
+
+        #chat-box {
+            height: 630px;
+            overflow-y: scroll;
+            border-bottom: 1px solid #000000b9;
+            color: rgb(4, 71, 4);
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 80%;
+            padding: 8px;
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 5px;
+        }
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            /* Color de fondo de la insignia de notificación */
+            color: white;
+            /* Color del texto de la insignia de notificación */
+            border-radius: 50%;
+            /* Para hacer un círculo */
+            width: 20px;
+            /* Ajusta el ancho según tus necesidades */
+            height: 20px;
+            /* Ajusta la altura según tus necesidades */
+            font-size: 12px;
+            /* Tamaño de fuente del número de notificación */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-container {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
+            <a class="navbar-brand m-0" href=" {{ url_for('index') }} "
+                >
+                <img src="{{ url_for('static', filename='assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100"
+                    alt="main_logo">
+                <span class="ms-1 font-weight-bold">Invento IA Solutions</span>
+            </a>
+        </div>
+        <hr class="horizontal dark mt-0">
+        <div class="collapse navbar-collapse  h-auto w-auto " id="sidenav-collapse-main">
+            <ul class="navbar-nav" style="overflow: hidden !important;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('index') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>shop </title>
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(-1716.000000, -439.000000)" fill="#FFFFFF"
+                                        fill-rule="nonzero">
+                                        <g transform="translate(1716.000000, 291.000000)">
+                                            <g transform="translate(0.000000, 148.000000)">
+                                                <path class="color-background opacity-6"
+                                                    d="M46.7199583,10.7414583 L40.8449583,0.949791667 C40.4909749,0.360605034 39.8540131,0 39.1666667,0 L7.83333333,0 C7.1459869,0 6.50902508,0.360605034 6.15504167,0.949791667 L0.280041667,10.7414583 C0.0969176761,11.0460037 -1.23209662e-05,11.3946378 -1.23209662e-05,11.75 C-0.00758042603,16.0663731 3.48367543,19.5725301 7.80004167,19.5833333 L7.81570833,19.5833333 C9.75003686,19.5882688 11.6168794,18.8726691 13.0522917,17.5760417 C16.0171492,20.2556967 20.5292675,20.2556967 23.494125,17.5760417 C26.4604562,20.2616016 30.9794188,20.2616016 33.94575,17.5760417 C36.2421905,19.6477597 39.5441143,20.1708521 42.3684437,18.9103691 C45.1927731,17.649886 47.0084685,14.8428276 47.0000295,11.75 C47.0000295,11.3946378 46.9030823,11.0460037 46.7199583,10.7414583 Z">
+                                                </path>
+                                                <path class="color-background"
+                                                    d="M39.198,22.4912623 C37.3776246,22.4928106 35.5817531,22.0149171 33.951625,21.0951667 L33.92225,21.1107282 C31.1430221,22.6838032 27.9255001,22.9318916 24.9844167,21.7998837 C24.4750389,21.605469 23.9777983,21.3722567 23.4960833,21.1018359 L23.4745417,21.1129513 C20.6961809,22.6871153 17.4786145,22.9344611 14.5386667,21.7998837 C14.029926,21.6054643 13.533337,21.3722507 13.0522917,21.1018359 C11.4250962,22.0190609 9.63246555,22.4947009 7.81570833,22.4912623 C7.16510551,22.4842162 6.51607673,22.4173045 5.875,22.2911849 L5.875,44.7220845 C5.875,45.9498589 6.7517757,46.9451667 7.83333333,46.9451667 L19.5833333,46.9451667 L19.5833333,33.6066734 L27.4166667,33.6066734 L27.4166667,46.9451667 L39.1666667,46.9451667 C40.2482243,46.9451667 41.125,45.9498589 41.125,44.7220845 L41.125,22.2822926 C40.4887822,22.4116582 39.8442868,22.4815492 39.198,22.4912623 Z">
+                                                </path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Informes estadísticos</span>
+                    </a>
+                </li>
+
+                <!-- Notificaciones -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('notificaciones') }}">
+                        <div class="icon-container">
+                            <div class="notification-badge">3</div>
+                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1"
+                                viewBox="0 0 611.999 611.999" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M570.107,500.254c-65.037-29.371-67.511-155.441-67.559-158.622v-84.578c0-81.402-49.742-151.399-120.427-181.203     C381.969,34,347.883,0,306.001,0c-41.883,0-75.968,34.002-76.121,75.849c-70.682,29.804-120.425,99.801-120.425,181.203v84.578     c-0.046,3.181-2.522,129.251-67.561,158.622c-7.409,3.347-11.481,11.412-9.768,19.36c1.711,7.949,8.74,13.626,16.871,13.626     h164.88c3.38,18.594,12.172,35.892,25.619,49.903c17.86,18.608,41.479,28.856,66.502,28.856     c25.025,0,48.644-10.248,66.502-28.856c13.449-14.012,22.241-31.311,25.619-49.903h164.88c8.131,0,15.159-5.676,16.872-13.626     C581.586,511.664,577.516,503.6,570.107,500.254z M484.434,439.859c6.837,20.728,16.518,41.544,30.246,58.866H97.32     c13.726-17.32,23.407-38.135,30.244-58.866H484.434z M306.001,34.515c18.945,0,34.963,12.73,39.975,30.082     c-12.912-2.678-26.282-4.09-39.975-4.09s-27.063,1.411-39.975,4.09C271.039,47.246,287.057,34.515,306.001,34.515z      M143.97,341.736v-84.685c0-89.343,72.686-162.029,162.031-162.029s162.031,72.686,162.031,162.029v84.826     c0.023,2.596,0.427,29.879,7.303,63.465H136.663C143.543,371.724,143.949,344.393,143.97,341.736z M306.001,577.485     c-26.341,0-49.33-18.992-56.709-44.246h113.416C355.329,558.493,332.344,577.485,306.001,577.485z" />
+                                            <path
+                                                d="M306.001,119.235c-74.25,0-134.657,60.405-134.657,134.654c0,9.531,7.727,17.258,17.258,17.258     c9.531,0,17.258-7.727,17.258-17.258c0-55.217,44.923-100.139,100.142-100.139c9.531,0,17.258-7.727,17.258-17.258     C323.259,126.96,315.532,119.235,306.001,119.235z" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            </div>
+                        </div>
+                        <span class="nav-link-text ms-1">Notificaciones</span>
+                    </a>
+                </li>
+
+                <!-- Chatbot -->
+                <li class="nav-item">
+                    <a class="nav-link  active" href="{{ url_for('chatbot') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px"
+                                viewBox="0 0 32 32" id="icon">
+                                <defs>
+                                    <style>
+                                        .cls-1 {
+                                            fill: none;
+                                        }
+                                    </style>
+                                </defs>
+                                <title>bot</title>
+                                <rect x="18" y="10" width="2" height="2" />
+                                <rect x="12" y="10" width="2" height="2" />
+                                <path
+                                    d="M26,20H21V18h1a2.0023,2.0023,0,0,0,2-2V12h2V10H24V8a2.0023,2.0023,0,0,0-2-2H20V2H18V6H14V2H12V6H10A2.0023,2.0023,0,0,0,8,8v2H6v2H8v4a2.0023,2.0023,0,0,0,2,2h1v2H6a2.0023,2.0023,0,0,0-2,2v8H6V22H26v8h2V22A2.0023,2.0023,0,0,0,26,20ZM10,8H22v8H10Zm3,10h6v2H13Z" />
+                                <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;"
+                                    class="cls-1" width="32" height="32" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Chatbot</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+            navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+
+                    <h3 class="font-weight-bolder mb-0">Chatbot</h3>
+                </nav>
+                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                    </div>
+                    <ul class="navbar-nav  justify-content-end">
+                        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+
+        <!-- INICIO CHATBOT -->
+        <div class="container-fluid py-4  z-index-2" style="
+    width: 90%;
+    height: 90vh;
+    ">
+    <div class="row justify-content-center h-100">
+        <div class="card">
+            <div style="margin-top: 10px;">
+                <div class="d-flex bd-highlight">
+                    <div class="img_cont">
+                        <img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png"
+                            class="rounded-circle user_img">
+                        <span class="online_icon"></span>
+                    </div>
+                    <div class="user_info">
+                        <span style="color: black;">Invento IA Solutions chatbot</span>
+                        <p style="color: black;">Pregunta cualquier cosa en relación a la base de datos. ¡El bot lo sabe todo!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="chat-container" class="centrado">
+            <div id="chat-box"></div>
+            <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    
+        <script>
+            function sendMessage() {
+                var userInput = document.getElementById("user-input").value;
+                var chatBox = document.getElementById("chat-box");
+    
+                // Agrega el mensaje del usuario al cuadro de chat
+                chatBox.innerHTML += "<p><strong>Tú:</strong> " + userInput + "</p>";
+    
+                // Realiza una solicitud POST al servidor Flask
+                fetch("/pregunta", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: "user=" + encodeURIComponent(userInput),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Agrega la respuesta del chatbot al cuadro de chat
+                    chatBox.innerHTML += "<p><strong>Chatbot:</strong> " + data.respuesta + "</p>";
+                })
+                .catch(error => console.error("Error:", error));
+    
+                // Limpia el cuadro de entrada del usuario
+                document.getElementById("user-input").value = "";
+            }
+        </script>
+    </div>
+
+    <!-- <div id="chat-container">
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            var chatBox = document.getElementById("chat-box");
+
+            // Agrega el mensaje del usuario al cuadro de chat
+            chatBox.innerHTML += "<p><strong>Tú:</strong> " + userInput + "</p>";
+
+            // Realiza una solicitud POST al servidor Flask
+            fetch("/pregunta", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "user=" + encodeURIComponent(userInput),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Agrega la respuesta del chatbot al cuadro de chat
+                chatBox.innerHTML += "<p><strong>Chatbot:</strong> " + data.respuesta + "</p>";
+            })
+            .catch(error => console.error("Error:", error));
+
+            // Limpia el cuadro de entrada del usuario
+            document.getElementById("user-input").value = "";
+        }
+    </script> -->
+</main>
+    <script src="{{ url_for('static', filename='assets/js/core/popper.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/chartjs.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ url_for('static', filename='assets/js/soft-ui-dashboard.min.js')}}"></script>
+</body>
+</html>
+
+<!-- VER QUE SI FUNCIONA -->
+<!-- <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App No Moleste Usuario de Negocio</title>
+</head>
+<body>
+    <h1>App No Moleste Usuario de Negocio</h1>
+    <p>Puedes hacerme a mi todas las preguntas y dejar trabajar al equipo de Data Science!!</p>
+
+    <form action="/pregunta" method="post">
+        <label for="user">¿En qué te puedo ayudar?:</label>
+        <input type="text" id="user" name="user" required>
+        <input type="submit" value="Enviar">
+    </form>
+
+    {% if pregunta %}
+        <h2>Respuesta a la pregunta: {{ pregunta }}</h2>
+        <p>{{ respuesta }}</p>
+        <a href="/">Hacer otra pregunta</a>
+    {% endif %}
+</body>
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #chat-container {
+            background-color: #801616;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 800px;
+            max-width: 100%;
+        }
+
+        #chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        #user-input {
+            width: 75%;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #e1e4e8;
+            outline: none;
+        }
+
+        #send-button {
+            width: 25%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-container">
+        <div id="chat-box"></div>
+        <div style="display: flex;">
+            <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+            <button id="send-button" onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            var chatBox = document.getElementById("chat-box");
+
+            chatBox.innerHTML += "<p><strong>Tú:</strong> " + userInput + "</p>";
+
+            fetch("/pregunta", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "user=" + encodeURIComponent(userInput),
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatBox.innerHTML += "<p><strong>Chatbot:</strong> " + data.respuesta + "</p>";
+            })
+            .catch(error => console.error("Error:", error));
+
+            document.getElementById("user-input").value = "";
+        }
+    </script>
+</body>
+</html> -->

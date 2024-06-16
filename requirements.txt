@@ -1,0 +1,13 @@
+flask
+google-generativeai
+pandas
+numpy
+torch
+pytz
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+google-cloud-bigquery==3.11.4
+db-dtypes==1.1.1
+gunicorn
